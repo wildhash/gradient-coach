@@ -14,10 +14,12 @@ Gradient Coach is an AI-powered hackathon assistant that validates your project'
 
 - **24-Hour Feasibility Validation**: Get realistic assessment of what you can build in a hackathon
 - **Ultra-Lean Tech Stack**: Recommendations optimized for fast shipping, not over-engineering
+- **Knowledge Base System**: Curated templates for common project types and MLH hackathon best practices
 - **Smart Timeline**: Phase-by-phase breakdown with realistic time estimates
 - **Cline Task Generation**: Ready-to-use tasks for AI coding assistants
 - **Pitch Generation**: Compelling pitch that highlights your innovation
 - **Repository Scaffolding**: Auto-generated starter code and configuration files
+- **Comprehensive Testing**: Full test suite with 37+ tests ensuring quality
 
 ## 🚀 Quick Start
 
@@ -129,6 +131,20 @@ Gradient Coach uses a modular architecture with specialized components:
 
 All components are powered by Claude AI through DigitalOcean's GradientAI API.
 
+## 📚 Knowledge Base
+
+Gradient Coach includes a curated knowledge base with:
+
+- **8 Tech Stack Templates**: Pre-configured stacks for common project types
+  - Full-stack web apps, frontend-only apps, APIs
+  - Chrome extensions, Discord bots, mobile apps (React Native)
+  - CLI tools, Python ML applications
+- **MLH Hackathon Guidelines**: Best practices, time management, judging criteria
+- **Common Mistakes Database**: What to avoid in hackathons
+- **Recommended APIs**: Curated list of reliable APIs by category
+
+The knowledge base enhances AI recommendations with proven patterns and helps avoid common pitfalls.
+
 ## 🛠️ Development
 
 ```bash
@@ -140,6 +156,15 @@ npm run build
 
 # Run production build
 npm start
+
+# Run tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
 ```
 
 ## 🌟 Use Cases
