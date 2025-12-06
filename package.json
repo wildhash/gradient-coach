@@ -11,9 +11,17 @@
     "start": "node dist/cli.js",
     "dev": "tsx src/cli.ts",
     "example": "tsx src/example.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
-  "keywords": ["hackathon", "ai", "coach", "digitalocean", "gradient"],
+  "keywords": [
+    "hackathon",
+    "ai",
+    "coach",
+    "digitalocean",
+    "gradient"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -25,5 +33,10 @@
     "inquirer": "^13.0.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6"
   }
 }

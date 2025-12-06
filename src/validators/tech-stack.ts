@@ -1,14 +1,29 @@
 import { ProjectIdea, TechStack } from '../types';
 import { GradientAIClient } from '../utils/ai-client';
+import { KnowledgeBase } from '../utils/knowledge-base';
 
 export class TechStackRecommender {
   private ai: GradientAIClient;
+  private kb: KnowledgeBase;
 
   constructor(ai: GradientAIClient) {
     this.ai = ai;
+    this.kb = new KnowledgeBase();
   }
 
   async recommend(project: ProjectIdea): Promise<TechStack> {
+    // Get knowledge base context
+    const kbContext = this.kb.getContextForPrompt(project.experienceLevel);
+    const recommendedTemplate = this.kb.getRecommendationByKeyword(project.idea);
+    
+    let templateHint = '';
+    if (recommendedTemplate) {
+      const template = this.kb.getTechStackTemplate(recommendedTemplate);
+      if (template) {
+        templateHint = `\nSuggested Template: ${template.name} - ${template.description}`;
+      }
+    }
+
     const systemPrompt = `You are an expert in hackathon tech stacks who recommends the leanest, fastest-to-ship technologies.
 Prioritize:
 - Technologies that are quick to set up
@@ -16,13 +31,15 @@ Prioritize:
 - Good documentation
 - Popular, well-supported libraries
 - Technologies matching the builder's experience level
-- Focus on shipping a working demo, not production-ready code`;
+- Focus on shipping a working demo, not production-ready code
+
+${kbContext}`;
 
     const prompt = `Recommend an ultra-lean tech stack for this hackathon project:
 
 Project Idea: ${project.idea}
 Builder Experience Level: ${project.experienceLevel}
-${project.features ? `Desired Features: ${project.features.join(', ')}` : ''}
+${project.features ? `Desired Features: ${project.features.join(', ')}` : ''}${templateHint}
 
 Focus on technologies that will help ship a demo FAST (within 24 hours). Keep it minimal.
 
