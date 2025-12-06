@@ -22,8 +22,26 @@ export class KnowledgeBase {
       this.guidelinesData = JSON.parse(fs.readFileSync(guidelinesPath, 'utf-8'));
     } catch (error) {
       console.warn('Warning: Could not load knowledge base files. Using defaults.');
-      this.techStacksData = { templates: {}, quickPicks: {}, recommendations: {} };
-      this.guidelinesData = { rules: {}, 'best-practices': {} };
+      this.techStacksData = { 
+        templates: {}, 
+        quickPicks: { beginner: [], intermediate: [], advanced: [] }, 
+        recommendations: {} 
+      };
+      this.guidelinesData = { 
+        rules: { 
+          'common-mistakes': [],
+          'judging-criteria': { 'common-categories': [] }
+        }, 
+        'best-practices': {
+          'planning': [],
+          'development': [],
+          'demo-preparation': [],
+          'time-management': []
+        },
+        'api-integrations': {
+          'recommended-apis': {}
+        }
+      };
     }
   }
 
@@ -86,8 +104,7 @@ export class KnowledgeBase {
    * Get recommended APIs for a specific category
    */
   getRecommendedAPIs(category: string): string[] {
-    const apis = this.guidelinesData['api-integrations']?.['recommended-apis'];
-    return apis ? (apis[category] || []) : [];
+    return this.guidelinesData['api-integrations']?.['recommended-apis']?.[category] || [];
   }
 
   /**
