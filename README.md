@@ -1,5 +1,9 @@
 # Gradient Coach
 
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
+[![Node](https://img.shields.io/badge/Node-18+-green)](https://nodejs.org/)
+
 > The AI co-founder that turns your hackathon idea into a shipped repo with code, Cline tasks, and a pitch—all in 60 seconds.
 
 Gradient Coach is an AI-powered hackathon assistant that validates your project's 24-hour feasibility, recommends an ultra-lean tech stack, creates a detailed timeline, generates Cline tasks, and crafts a compelling pitch—all optimized for shipping a demo fast.
