@@ -1,0 +1,107 @@
+{
+  "templates": {
+    "web-app-fullstack": {
+      "name": "Full-Stack Web Application",
+      "description": "Complete web application with frontend and backend",
+      "frontend": ["React", "Vite", "TailwindCSS"],
+      "backend": ["Node.js", "Express", "TypeScript"],
+      "database": ["PostgreSQL", "Prisma ORM"],
+      "deployment": ["DigitalOcean App Platform", "Docker"],
+      "aiTools": ["Anthropic Claude API", "OpenAI API"],
+      "timeEstimate": "18-22 hours",
+      "difficulty": "intermediate-advanced"
+    },
+    "web-app-frontend-only": {
+      "name": "Frontend-Only Web App",
+      "description": "Client-side web application with API integration",
+      "frontend": ["React", "Vite", "TailwindCSS", "Zustand for state"],
+      "backend": ["External APIs only"],
+      "database": ["LocalStorage", "IndexedDB"],
+      "deployment": ["Vercel", "Netlify", "GitHub Pages"],
+      "aiTools": ["Anthropic Claude API", "OpenAI API"],
+      "timeEstimate": "12-16 hours",
+      "difficulty": "beginner-intermediate"
+    },
+    "api-backend": {
+      "name": "API Backend Service",
+      "description": "RESTful API service with database",
+      "frontend": [],
+      "backend": ["Node.js", "Fastify", "TypeScript"],
+      "database": ["PostgreSQL", "Prisma ORM"],
+      "deployment": ["DigitalOcean App Platform", "Railway"],
+      "aiTools": ["Anthropic Claude API", "Langchain"],
+      "timeEstimate": "14-18 hours",
+      "difficulty": "intermediate"
+    },
+    "chrome-extension": {
+      "name": "Chrome Extension",
+      "description": "Browser extension with content scripts",
+      "frontend": ["Vanilla JS", "Plasmo Framework", "TailwindCSS"],
+      "backend": ["Chrome Extension APIs", "Optional: serverless functions"],
+      "database": ["Chrome Storage API", "Optional: Firebase"],
+      "deployment": ["Chrome Web Store"],
+      "aiTools": ["Anthropic Claude API", "OpenAI API"],
+      "timeEstimate": "12-16 hours",
+      "difficulty": "intermediate"
+    },
+    "discord-bot": {
+      "name": "Discord Bot",
+      "description": "Interactive Discord bot with commands",
+      "frontend": [],
+      "backend": ["Node.js", "discord.js", "TypeScript"],
+      "database": ["SQLite", "JSON files"],
+      "deployment": ["DigitalOcean Droplet", "Railway", "Heroku"],
+      "aiTools": ["Anthropic Claude API", "OpenAI API"],
+      "timeEstimate": "10-14 hours",
+      "difficulty": "beginner-intermediate"
+    },
+    "mobile-app-react-native": {
+      "name": "Mobile App (React Native)",
+      "description": "Cross-platform mobile application",
+      "frontend": ["React Native", "Expo", "NativeWind"],
+      "backend": ["Firebase", "Supabase"],
+      "database": ["Firebase Firestore", "Supabase"],
+      "deployment": ["Expo Go", "TestFlight", "Google Play (internal)"],
+      "aiTools": ["Anthropic Claude API", "OpenAI API"],
+      "timeEstimate": "16-22 hours",
+      "difficulty": "intermediate-advanced"
+    },
+    "cli-tool": {
+      "name": "Command Line Tool",
+      "description": "Terminal-based utility or automation tool",
+      "frontend": [],
+      "backend": ["Node.js", "Commander.js", "Inquirer.js"],
+      "database": ["JSON files", "SQLite"],
+      "deployment": ["npm package", "GitHub Releases"],
+      "aiTools": ["Anthropic Claude API", "OpenAI API"],
+      "timeEstimate": "8-12 hours",
+      "difficulty": "beginner-intermediate"
+    },
+    "python-ml-app": {
+      "name": "Python ML Application",
+      "description": "Machine learning or data science application",
+      "frontend": ["Streamlit", "Gradio"],
+      "backend": ["Python", "FastAPI", "scikit-learn"],
+      "database": ["SQLite", "Pandas DataFrames"],
+      "deployment": ["Streamlit Cloud", "Hugging Face Spaces", "DigitalOcean"],
+      "aiTools": ["Anthropic Claude API", "Hugging Face Transformers"],
+      "timeEstimate": "14-18 hours",
+      "difficulty": "intermediate-advanced"
+    }
+  },
+  "quickPicks": {
+    "beginner": ["web-app-frontend-only", "discord-bot", "cli-tool"],
+    "intermediate": ["web-app-fullstack", "api-backend", "chrome-extension"],
+    "advanced": ["web-app-fullstack", "mobile-app-react-native", "python-ml-app"]
+  },
+  "recommendations": {
+    "voice-agent": "api-backend",
+    "dashboard": "web-app-fullstack",
+    "game": "web-app-frontend-only",
+    "automation": "cli-tool",
+    "chatbot": "discord-bot",
+    "ai-tool": "python-ml-app",
+    "browser-tool": "chrome-extension",
+    "mobile-first": "mobile-app-react-native"
+  }
+}
