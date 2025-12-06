@@ -338,4 +338,3 @@ __all__ = [
     "generate_basic_express_app",
     "generate_basic_html_template",
 ]
-'''
