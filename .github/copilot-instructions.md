@@ -110,8 +110,8 @@ describe('ComponentName', () => {
 
 ### Using the AI Client
 - All AI calls go through `GradientAIClient` in `src/utils/ai-client.ts`
-- Use `getCompletion()` for text responses
-- Use `getStructuredCompletion<T>()` for JSON responses
+- Use `generateCompletion()` for text responses
+- Use `generateJSON<T>()` for JSON responses
 - AI client handles JSON extraction from markdown code blocks
 
 ### Prompt Engineering
