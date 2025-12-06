@@ -1,0 +1,130 @@
+# MLH Hackathon Guidelines & Best Practices
+
+## Time Management
+- Most hackathons are 24-36 hours
+- Plan for 18-24 hours of actual coding time (account for sleep, meals, breaks)
+- First 2-3 hours: Setup and learning
+- Last 2-3 hours: Polish and presentation prep
+- Middle hours: Core feature development
+
+## Team Composition
+- Teams typically 1-4 people
+- Solo: Focus on one core feature, minimal scope
+- 2-person: Split frontend/backend or feature work
+- 3-4 person: Can tackle more ambitious projects
+- Assign clear roles early: frontend, backend, design, presentation
+
+## Judging Criteria
+Common categories:
+- Innovation/Creativity
+- Technical Complexity
+- Design/UX
+- Practical Utility
+- Completion/Polish
+- Presentation Quality
+
+Sponsor prizes:
+- Best use of specific API/technology
+- Best application in a domain (e.g., healthcare, education)
+- Best design, best beginner hack
+
+## Common Mistakes to Avoid
+1. Over-scoping: Trying to build too much
+2. Late integration: Components don't work together
+3. No demo: Can't show the product working
+4. Poor presentation: Can't explain what you built
+5. Ignoring sponsor requirements: Missing prize opportunities
+
+## Best Practices
+
+### Planning Phase (First 2 hours)
+- Sketch a simple architecture diagram
+- Identify the ONE core feature that demonstrates your idea
+- Plan MVP first, then nice-to-haves
+- Set up project repository immediately
+- Divide work clearly among team members
+
+### Development Phase
+- Use familiar technologies (no time for learning curves)
+- Leverage templates, boilerplates, and starter kits
+- Hard-code data if building a real backend takes too long
+- Use mock data and APIs for faster iteration
+- Integrate frequently (don't wait until the end)
+
+### Demo Preparation (Last 2-3 hours)
+- Test your demo multiple times
+- Have a backup plan if live demo fails
+- Prepare screenshots/video as fallback
+- Practice your 2-minute pitch
+- Submit to Devpost before deadline
+
+### Presentation Tips
+- Start with the problem, not the tech
+- Show, don't tell (live demo is powerful)
+- Highlight your innovation/uniqueness
+- Be honest about limitations
+- Show enthusiasm and passion
+
+## Technical Recommendations
+- Use APIs instead of building everything from scratch
+- Choose technologies with good documentation
+- Prioritize features that impress visually
+- Test on multiple browsers/devices if web-based
+- Have error handling for your demo
+
+## Sponsor Integration
+- Read sponsor challenges carefully
+- Use their APIs/technologies as specified
+- Mention sponsors in your pitch
+- Tag sponsors in Devpost submission
+- Show genuine use case for their product
+
+## Time Budget Examples
+
+### 24-Hour Event
+- Hour 0-2: Team formation, ideation, planning
+- Hour 2-4: Setup, boilerplate, basic architecture
+- Hour 4-12: Core feature development
+- Hour 12-20: Additional features, integration
+- Hour 20-22: Bug fixes, polish, testing
+- Hour 22-24: Presentation prep, Devpost submission
+
+### Feature Prioritization
+Must have (8-12 hours):
+- Core functionality that demonstrates the idea
+- Basic UI that works
+
+Nice to have (4-6 hours):
+- Additional features
+- Better design/UX
+- Error handling
+
+Polish (2-3 hours):
+- Animations
+- Edge case handling
+- Documentation
+
+## Resources to Use
+- GitHub templates and starter kits
+- Component libraries (Material-UI, shadcn, etc.)
+- CSS frameworks (Tailwind, Bootstrap)
+- API marketplaces (RapidAPI)
+- AI coding assistants (GitHub Copilot, Cline)
+- Mock data generators
+- Free hosting platforms (Vercel, Netlify, Railway)
+
+## Red Flags (Avoid These)
+- Trying to learn a new framework during the event
+- Building authentication from scratch
+- Complex database schemas with migrations
+- Over-engineered architectures
+- No version control or backups
+- Working in isolation without communication
+
+## Success Factors
+1. Clear, focused scope
+2. Working demo by end of event
+3. Good presentation and story
+4. Team collaboration and division of work
+5. Technical achievement within constraints
+6. Addressing real problem or need

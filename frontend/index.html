@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Coach - AI Hackathon Co-Founder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="gradient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Gradient Coach</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#validate" class="nav-link" data-section="validate">Validate</a>
+                <a href="#scaffold" class="nav-link" data-section="scaffold">Scaffold</a>
+                <a href="#pitch" class="nav-link" data-section="pitch">Pitch</a>
+                <a href="#docs" class="nav-link" data-section="docs">Docs Oracle</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">Your AI Hackathon Co-Founder</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Turn your idea into a shipped repo with code, Cline tasks, and a pitch—all in 60 seconds.
+                    </p>
+                    <div class="hero-badges">
+                        <span class="badge badge-gradient">🚀 Powered by Gradient AI</span>
+                        <span class="badge badge-outline">⚡ 24-Hour Feasibility</span>
+                        <span class="badge badge-outline">🎯 Ultra-Lean Tech Stacks</span>
+                    </div>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-large" onclick="navigateToSection('validate')">
+                            Start Your Project
+                            <span class="btn-icon">→</span>
+                        </button>
+                        <button class="btn btn-secondary btn-large" onclick="navigateToSection('docs')">
+                            Ask the Oracle
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Validate Ideas</h3>
+                        <p>Get realistic assessment of what you can build in 24 hours</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏗️</div>
+                        <h3>Generate Scaffold</h3>
+                        <p>Auto-generate starter code and repo structure</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎤</div>
+                        <h3>Craft Pitch</h3>
+                        <p>Create compelling Devpost content and demo scripts</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Docs Oracle</h3>
+                        <p>Query MLH guidelines and tech recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Validate Section -->
+        <section id="validate" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="section-icon">🔍</span>
+                    Validate Your Idea
+                </h2>
+                <p class="section-description">
+                    Get a realistic 24-hour feasibility assessment with risk analysis and tech recommendations
+                </p>
+            </div>
+
+            <div class="wizard-container">
+                <!-- Step 1: Project Idea -->
+                <div class="wizard-step" id="step-idea">
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>What's your hackathon project idea?</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="project-idea">Project Idea</label>
+                                <textarea 
+                                    id="project-idea" 
+                                    class="input-field" 
+                                    rows="4" 
+                                    placeholder="e.g., A Chrome extension that uses AI to summarize YouTube videos and save them to Notion"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="experience-level">Experience Level</label>
+                                    <select id="experience-level" class="input-field">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate" selected>Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="features">Specific Features (optional, comma-separated)</label>
+                                <input 
+                                    type="text" 
+                                    id="features" 
+                                    class="input-field" 
+                                    placeholder="e.g., transcript extraction, AI summary, save to Notion">
+                            </div>
+                            <div class="form-group">
+                                <label for="tech-preferences">Tech Preferences (optional, comma-separated)</label>
+                                <input 
+                                    type="text" 
+                                    id="tech-preferences" 
+                                    class="input-field" 
+                                    placeholder="e.g., React, FastAPI, PostgreSQL">
+                            </div>
+                            <button class="btn btn-primary" onclick="validateIdea()">
+                                <span class="btn-text">Validate Idea</span>
+                                <span class="btn-loader"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div id="validate-results" class="results-container" style="display: none;">
+                    <!-- Feasibility Assessment -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>📊 Feasibility Assessment</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="feasibility-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack Recommendation -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>🛠️ Recommended Tech Stack</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="tech-stack-content"></div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="proceedToScaffold()">
+                            Generate Scaffold →
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetValidate()">
+                            Try Another Idea
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scaffold Section -->
+        <section id="scaffold" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="section-icon">🏗️</span>
+                    Generate Repository Scaffold
+                </h2>
+                <p class="section-description">
+                    Create a complete starter project with code, file structure, and Cline tasks
+                </p>
+            </div>
+
+            <div class="wizard-container">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h3>Project Configuration</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="scaffold-project-name">Project Name</label>
+                            <input 
+                                type="text" 
+                                id="scaffold-project-name" 
+                                class="input-field" 
+                                placeholder="my-awesome-hackathon-project">
+                        </div>
+                        <div class="form-group">
+                            <label for="scaffold-idea">Project Idea</label>
+                            <textarea 
+                                id="scaffold-idea" 
+                                class="input-field" 
+                                rows="3" 
+                                placeholder="Describe your project"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="scaffold-features">Core Features (comma-separated)</label>
+                            <input 
+                                type="text" 
+                                id="scaffold-features" 
+                                class="input-field" 
+                                placeholder="feature1, feature2, feature3">
+                        </div>
+                        <button class="btn btn-primary" onclick="generateScaffold()">
+                            <span class="btn-text">Generate Scaffold</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Scaffold Results -->
+                <div id="scaffold-results" class="results-container" style="display: none;">
+                    <!-- Architecture -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>🏛️ System Architecture</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="architecture-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- File Structure -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>📁 Generated Files</h3>
+                            <button class="btn btn-sm btn-outline" onclick="downloadScaffoldFiles()">
+                                Download ZIP
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="files-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cline Tasks -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>🤖 Cline Tasks</h3>
+                            <button class="btn btn-sm btn-outline" onclick="copyClinetasks()">
+                                Copy JSON
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="cline-tasks-content"></div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="proceedToPitch()">
+                            Generate Pitch →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pitch Section -->
+        <section id="pitch" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="section-icon">🎤</span>
+                    Generate Your Pitch
+                </h2>
+                <p class="section-description">
+                    Create compelling Devpost content and a memorable demo script
+                </p>
+            </div>
+
+            <div class="wizard-container">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h3>Pitch Configuration</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="pitch-idea">Project Idea</label>
+                            <textarea 
+                                id="pitch-idea" 
+                                class="input-field" 
+                                rows="3" 
+                                placeholder="Describe your project"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pitch-features">Key Features (comma-separated)</label>
+                            <input 
+                                type="text" 
+                                id="pitch-features" 
+                                class="input-field" 
+                                placeholder="feature1, feature2, feature3">
+                        </div>
+                        <div class="form-group">
+                            <label for="pitch-audience">Target Audience</label>
+                            <select id="pitch-audience" class="input-field">
+                                <option value="hackathon judges">Hackathon Judges</option>
+                                <option value="technical audience">Technical Audience</option>
+                                <option value="general audience">General Audience</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="generatePitch()">
+                            <span class="btn-text">Generate Pitch</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pitch Results -->
+                <div id="pitch-results" class="results-container" style="display: none;">
+                    <!-- Pitch Overview -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>🎯 Pitch Overview</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="pitch-overview-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- Demo Script -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>🎬 Demo Script</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="demo-script-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- Devpost Content -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>📝 Devpost Description</h3>
+                            <button class="btn btn-sm btn-outline" onclick="copyDevpost()">
+                                Copy Markdown
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="devpost-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Docs Oracle Section -->
+        <section id="docs" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="section-icon">📚</span>
+                    Docs Oracle
+                </h2>
+                <p class="section-description">
+                    Ask questions about MLH hackathon guidelines, Gradient AI, or tech stack recommendations
+                </p>
+            </div>
+
+            <div class="wizard-container">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h3>Ask a Question</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="oracle-question">Your Question</label>
+                            <textarea 
+                                id="oracle-question" 
+                                class="input-field" 
+                                rows="3" 
+                                placeholder="e.g., What are the MLH judging criteria? How do I use Gradient AI for streaming responses?"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="oracle-context">Additional Context (optional)</label>
+                            <input 
+                                type="text" 
+                                id="oracle-context" 
+                                class="input-field" 
+                                placeholder="Any additional context for your question">
+                        </div>
+                        <button class="btn btn-primary" onclick="askOracle()">
+                            <span class="btn-text">Ask Oracle</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Oracle Response -->
+                <div id="oracle-results" class="results-container" style="display: none;">
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h3>💡 Answer</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="oracle-answer-content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example Questions -->
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h3>💭 Example Questions</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="example-questions">
+                            <button class="example-question" onclick="askExampleQuestion('What are the common mistakes to avoid in hackathons?')">
+                                What are the common mistakes to avoid in hackathons?
+                            </button>
+                            <button class="example-question" onclick="askExampleQuestion('How do I make streaming API calls with Gradient AI?')">
+                                How do I make streaming API calls with Gradient AI?
+                            </button>
+                            <button class="example-question" onclick="askExampleQuestion('What tech stack should I use for a Chrome extension?')">
+                                What tech stack should I use for a Chrome extension?
+                            </button>
+                            <button class="example-question" onclick="askExampleQuestion('How should I split 24 hours of hackathon time?')">
+                                How should I split 24 hours of hackathon time?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p class="loading-message">Processing with Gradient AI...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
