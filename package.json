@@ -1,0 +1,29 @@
+{
+  "name": "gradient-coach",
+  "version": "1.0.0",
+  "description": "The AI co-founder that turns your hackathon idea into a shipped repo with code, Cline tasks, and a pitch—all in 60 seconds.",
+  "main": "dist/index.js",
+  "bin": {
+    "gradient-coach": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "tsx src/cli.ts",
+    "example": "tsx src/example.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["hackathon", "ai", "coach", "digitalocean", "gradient"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^24.10.1",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "inquirer": "^13.0.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
