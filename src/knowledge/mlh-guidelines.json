@@ -1,0 +1,128 @@
+{
+  "title": "MLH Hackathon Guidelines & Best Practices",
+  "version": "2024",
+  "rules": {
+    "time-constraints": {
+      "description": "Most hackathons are 24-36 hours",
+      "guidelines": [
+        "Plan for 18-24 hours of actual coding time (account for sleep, meals, breaks)",
+        "First 2-3 hours: Setup and learning",
+        "Last 2-3 hours: Polish and presentation prep",
+        "Middle hours: Core feature development"
+      ]
+    },
+    "team-composition": {
+      "description": "Teams typically 1-4 people",
+      "guidelines": [
+        "Solo: Focus on one core feature, minimal scope",
+        "2-person: Split frontend/backend or feature work",
+        "3-4 person: Can tackle more ambitious projects",
+        "Assign clear roles early: frontend, backend, design, presentation"
+      ]
+    },
+    "judging-criteria": {
+      "common-categories": [
+        "Innovation/Creativity",
+        "Technical Complexity",
+        "Design/UX",
+        "Practical Utility",
+        "Completion/Polish",
+        "Presentation Quality"
+      ],
+      "sponsor-prizes": [
+        "Best use of specific API/technology",
+        "Best application in a domain (e.g., healthcare, education)",
+        "Best design, best beginner hack"
+      ]
+    },
+    "common-mistakes": [
+      "Over-scoping: Trying to build too much",
+      "Late integration: Components don't work together",
+      "No demo: Can't show the product working",
+      "Poor presentation: Can't explain what you built",
+      "Ignoring sponsor requirements: Missing prize opportunities"
+    ]
+  },
+  "best-practices": {
+    "planning": [
+      "Sketch a simple architecture diagram",
+      "Identify the ONE core feature that demonstrates your idea",
+      "Plan MVP first, then nice-to-haves",
+      "Set checkpoint goals every 4-6 hours"
+    ],
+    "development": [
+      "Use familiar technologies when possible",
+      "Favor speed over perfection",
+      "Mock external APIs if they're unreliable",
+      "Commit and push code frequently",
+      "Use feature branches for team projects",
+      "Document as you go (README, comments)"
+    ],
+    "demo-preparation": [
+      "Record a backup video demo in case of technical issues",
+      "Prepare a 2-minute pitch: problem, solution, demo, tech stack",
+      "Test the demo flow multiple times",
+      "Have screenshots/slides as backup",
+      "Practice the pitch with your team"
+    ],
+    "time-management": [
+      "Hour 0-2: Setup, planning, initial scaffolding",
+      "Hour 2-8: Core feature development",
+      "Hour 8-10: First integration test (get something working end-to-end)",
+      "Hour 10-16: Additional features, improvements",
+      "Hour 16-18: Polish, bug fixes, testing",
+      "Hour 18-22: Demo prep, slides, pitch practice",
+      "Hour 22-24: Final polish, submission"
+    ]
+  },
+  "devpost-submission": {
+    "required-fields": [
+      "Project Title",
+      "Tagline (max 80 characters)",
+      "Detailed Description",
+      "What it does",
+      "How we built it",
+      "Challenges we ran into",
+      "Accomplishments that we're proud of",
+      "What we learned",
+      "What's next for [project]"
+    ],
+    "tips": [
+      "Add screenshots and a demo video",
+      "Tag relevant sponsor technologies",
+      "Make the description skimmable (use headers, bullets)",
+      "Emphasize the innovation and impact",
+      "Explain technical challenges overcome"
+    ]
+  },
+  "api-integrations": {
+    "tips": [
+      "Read API docs during planning phase",
+      "Test API calls early (postman, curl)",
+      "Check rate limits and free tier restrictions",
+      "Have a plan B if API is down or slow",
+      "Store API keys securely (.env files)",
+      "For sponsor prizes, feature their API prominently"
+    ],
+    "recommended-apis": {
+      "ai-ml": ["OpenAI", "Anthropic Claude", "Hugging Face", "Cohere"],
+      "database": ["Supabase", "Firebase", "MongoDB Atlas", "PlanetScale"],
+      "deployment": ["Vercel", "Netlify", "Railway", "DigitalOcean App Platform"],
+      "auth": ["Clerk", "Auth0", "Firebase Auth", "NextAuth"],
+      "communication": ["Twilio", "SendGrid", "Discord API", "Slack API"],
+      "maps-location": ["Google Maps", "Mapbox", "OpenStreetMap"],
+      "payments": ["Stripe", "PayPal"],
+      "data-apis": ["NewsAPI", "Weather APIs", "Spotify API", "Twitter API"]
+    }
+  },
+  "red-flags": {
+    "avoid-these": [
+      "Building your own authentication system from scratch",
+      "Creating custom ML models (use pre-trained)",
+      "Extensive UI animations (use component libraries)",
+      "Complex DevOps setups (use managed services)",
+      "Building mobile apps with native Swift/Kotlin (use React Native/Flutter)",
+      "Writing extensive tests (focus on working demo)"
+    ]
+  }
+}
