@@ -4,7 +4,7 @@
 
 Gradient Coach is an AI-powered hackathon assistant that validates 24-hour feasibility, recommends tech stacks, creates timelines, generates Cline tasks, and crafts compelling pitches. It's optimized for helping developers ship hackathon demos fast.
 
-**Tech Stack**: TypeScript, Node.js 18+, Anthropic Claude AI (via DigitalOcean GradientAI)
+**Tech Stack**: TypeScript, Node.js 18+, Anthropic Claude AI (supports optional DigitalOcean GradientAI endpoint)
 
 ## Repository Structure
 
