@@ -13,4 +13,7 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
+  moduleNameMapper: {
+    '^ora$': '<rootDir>/tests/__mocks__/ora.ts'
+  },
 };

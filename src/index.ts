@@ -31,10 +31,9 @@ export class GradientCoach {
     logger.section('🚀 Starting Gradient Coach analysis...');
 
     // Step 1: Validate feasibility
-    logger.step('⚡ Validating 24-hour feasibility...');
+    logger.startSpinner('Validating 24-hour feasibility...');
     const feasibility = await this.feasibilityValidator.validate(project);
-    logger.result('Feasibility', feasibility.isFeasible ? '✅ Feasible' : '❌ Not Feasible');
-    logger.result('Risk Level', feasibility.riskLevel);
+    logger.succeedSpinner(`Feasibility: ${feasibility.isFeasible ? '✅ Feasible' : '⚠️ May not be feasible'} (Risk: ${feasibility.riskLevel})`);
 
     if (!feasibility.isFeasible) {
       logger.warning('Project may not be feasible in 24 hours. Consider these recommendations:');
@@ -42,35 +41,35 @@ export class GradientCoach {
     }
 
     // Step 2: Recommend tech stack
-    logger.step('🛠️  Recommending ultra-lean tech stack...');
+    logger.startSpinner('Recommending ultra-lean tech stack...');
     const techStack = await this.techStackRecommender.recommend(project);
-    logger.success('Tech stack recommended');
+    logger.succeedSpinner('Tech stack recommended');
 
     // Step 3: Generate timeline
-    logger.step('📅 Generating project timeline...');
+    logger.startSpinner('Generating project timeline...');
     const timeline = await this.timelineGenerator.generate(
       project,
       techStack,
       feasibility.estimatedHours
     );
-    logger.success(`Timeline created (${timeline.totalHours} hours)`);
+    logger.succeedSpinner(`Timeline created (${timeline.totalHours} hours planned)`);
 
     // Step 4: Generate Cline tasks
-    logger.step('🤖 Generating Cline tasks...');
+    logger.startSpinner('Generating Cline tasks...');
     const clineTasks = await this.clineTaskGenerator.generate(project, techStack, timeline);
-    logger.success(`${clineTasks.length} tasks generated`);
+    logger.succeedSpinner(`${clineTasks.length} tasks generated`);
 
     // Step 5: Generate pitch
-    logger.step('🎤 Crafting pitch...');
+    logger.startSpinner('Crafting your pitch...');
     const pitch = await this.pitchGenerator.generate(project, techStack);
-    logger.success(`Pitch created: "${pitch.title}"`);
+    logger.succeedSpinner(`Pitch created: "${pitch.title}"`);
 
     // Step 6: Generate scaffold (optional)
     let scaffoldFiles: Record<string, string> | undefined;
     if (includeScaffold) {
-      logger.step('📦 Generating repository scaffold...');
+      logger.startSpinner('Generating repository scaffold...');
       scaffoldFiles = await this.scaffoldGenerator.generate(project, techStack);
-      logger.success(`${Object.keys(scaffoldFiles).length} files generated`);
+      logger.succeedSpinner(`${Object.keys(scaffoldFiles).length} files generated`);
     }
 
     logger.section('✨ Gradient Coach analysis complete!');

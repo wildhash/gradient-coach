@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { formatErrorForUser } from './utils/errors';
 import { validateExperienceLevel, validateProjectIdea, validateAPIKey, validateOutputDirectory, validateFeatures } from './utils/validation';
+import { validateCoachOutput, validateJSONOutput } from './utils/output-validation';
 import { logger } from './utils/logger';
 
 const program = new Command();
@@ -132,6 +133,16 @@ program
       // Run the coach
       const coach = new GradientCoach();
       const output = await coach.coach(projectIdea, options.scaffold);
+
+      // Validate output before saving
+      logger.startSpinner('Validating generated output...');
+      try {
+        validateCoachOutput(output);
+        logger.succeedSpinner('Output validated successfully');
+      } catch (error) {
+        logger.failSpinner('Output validation failed');
+        throw error;
+      }
 
       // Save output to files
       const outputDir = options.output;
