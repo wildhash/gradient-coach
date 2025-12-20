@@ -127,8 +127,8 @@ export function validateFileContent(content: string, filename: string): void {
     throw new ValidationError(`File content cannot be empty: ${filename}`);
   }
 
-  // Check for common generation errors
-  if (content.includes('undefined') && content.includes('null')) {
+  // Check for common generation errors (either undefined or null strings)
+  if (content.includes('undefined') || content.includes('null')) {
     throw new ValidationError(`File appears to have generation errors: ${filename}`);
   }
 

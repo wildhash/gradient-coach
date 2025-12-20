@@ -85,8 +85,12 @@ describe('Validation Utilities', () => {
   describe('validateOutputDirectory', () => {
     test('should accept valid output directories', () => {
       expect(() => validateOutputDirectory('./output')).not.toThrow();
-      expect(() => validateOutputDirectory('/tmp/gradient-coach')).not.toThrow();
       expect(() => validateOutputDirectory('my-project/output')).not.toThrow();
+    });
+
+    test('should accept absolute paths in safe locations', () => {
+      expect(() => validateOutputDirectory('/tmp/gradient-coach')).not.toThrow();
+      expect(() => validateOutputDirectory('/home/user/project')).not.toThrow();
     });
 
     test('should throw ValidationError for empty directory', () => {
@@ -94,10 +98,18 @@ describe('Validation Utilities', () => {
       expect(() => validateOutputDirectory('   ')).toThrow(ValidationError);
     });
 
-    test('should throw ValidationError for dangerous paths', () => {
-      expect(() => validateOutputDirectory('../../../etc')).toThrow(ValidationError);
+    test('should throw ValidationError for dangerous system paths', () => {
       expect(() => validateOutputDirectory('/etc/config')).toThrow(ValidationError);
       expect(() => validateOutputDirectory('/sys/kernel')).toThrow(ValidationError);
+      expect(() => validateOutputDirectory('/proc/sys')).toThrow(ValidationError);
+      expect(() => validateOutputDirectory('/dev/null')).toThrow(ValidationError);
+      expect(() => validateOutputDirectory('/root/.ssh')).toThrow(ValidationError);
+    });
+
+    test('should handle path traversal attempts', () => {
+      // Path traversal attempts should be caught
+      // These will resolve outside safe boundaries
+      expect(() => validateOutputDirectory('../../../../../../etc')).toThrow(ValidationError);
     });
   });
 

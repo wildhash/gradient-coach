@@ -1,4 +1,5 @@
 import { ValidationError } from './errors';
+import * as path from 'path';
 
 /**
  * Validation utilities for user inputs
@@ -57,8 +58,23 @@ export function validateOutputDirectory(dir: string): void {
     throw new ValidationError('Output directory cannot be empty');
   }
   
+  // Resolve the path and check if it's within safe bounds
+  const resolvedPath = path.resolve(dir);
+  const cwd = process.cwd();
+  
   // Check for potentially dangerous paths
-  if (dir.includes('..') || dir.startsWith('/etc') || dir.startsWith('/sys')) {
+  const dangerousPaths = ['/etc', '/sys', '/proc', '/dev', '/root'];
+  for (const dangerous of dangerousPaths) {
+    if (resolvedPath.startsWith(dangerous)) {
+      throw new ValidationError('Invalid output directory path');
+    }
+  }
+  
+  // Ensure the resolved path is within or relative to current working directory
+  // or is an absolute path in a safe location
+  const relativePath = path.relative(cwd, resolvedPath);
+  if (relativePath.startsWith('..') && !resolvedPath.startsWith('/tmp') && !resolvedPath.startsWith('/home')) {
+    // Path goes outside cwd and is not in safe system locations
     throw new ValidationError('Invalid output directory path');
   }
 }

@@ -7,6 +7,7 @@ export class GradientAIClient {
   private client: Anthropic;
   private maxRetries: number = 3;
   private retryDelayMs: number = 1000;
+  private maxRetryDelayMs: number = 10000; // Cap at 10 seconds
 
   constructor(apiKey?: string) {
     const key = apiKey || process.env.ANTHROPIC_API_KEY || '';
@@ -89,7 +90,10 @@ export class GradientAIClient {
         
         // Only retry on service errors
         if (error instanceof AIServiceError && attempt < this.maxRetries) {
-          const delay = this.retryDelayMs * Math.pow(2, attempt - 1);
+          const delay = Math.min(
+            this.maxRetryDelayMs,
+            this.retryDelayMs * Math.pow(2, attempt - 1)
+          );
           logger.debug(`Retry attempt ${attempt}/${this.maxRetries} after ${delay}ms`);
           await this.sleep(delay);
           continue;
