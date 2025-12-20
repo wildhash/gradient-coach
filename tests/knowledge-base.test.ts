@@ -17,9 +17,12 @@ describe('KnowledgeBase', () => {
     test('should get specific tech stack template', () => {
       const template = kb.getTechStackTemplate('web-app-fullstack');
       expect(template).toBeDefined();
-      expect(template.name).toBe('Full-Stack Web Application');
-      expect(template.frontend).toBeDefined();
-      expect(template.backend).toBeDefined();
+      expect(template).not.toBeNull();
+      if (template) {
+        expect(template.name).toBe('Full-Stack Web Application');
+        expect(template.frontend).toBeDefined();
+        expect(template.backend).toBeDefined();
+      }
     });
 
     test('should return null for non-existent template', () => {
