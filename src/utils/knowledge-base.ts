@@ -1,16 +1,81 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { FileSystemError } from './errors';
+import { logger } from './logger';
+
+interface TechStackTemplate {
+  name: string;
+  description: string;
+  [key: string]: any;
+}
+
+interface TechStacksData {
+  templates: Record<string, TechStackTemplate>;
+  quickPicks: {
+    beginner: string[];
+    intermediate: string[];
+    advanced: string[];
+  };
+  recommendations: Record<string, string>;
+}
+
+interface GuidelinesData {
+  rules: {
+    'common-mistakes': string[];
+    'judging-criteria': {
+      'common-categories': string[];
+      [key: string]: any;
+    };
+  };
+  'best-practices': {
+    planning: string[];
+    development: string[];
+    'demo-preparation': string[];
+    'time-management': string[];
+  };
+  'api-integrations': {
+    'recommended-apis': Record<string, string[]>;
+  };
+}
 
 /**
  * Knowledge Base Loader
  * Provides access to curated templates, guidelines, and best practices
  */
 export class KnowledgeBase {
-  private techStacksData: any;
-  private guidelinesData: any;
+  private techStacksData: TechStacksData;
+  private guidelinesData: GuidelinesData;
 
   constructor() {
+    this.techStacksData = this.getDefaultTechStacks();
+    this.guidelinesData = this.getDefaultGuidelines();
     this.loadKnowledgeBase();
+  }
+
+  private getDefaultTechStacks(): TechStacksData {
+    return {
+      templates: {},
+      quickPicks: { beginner: [], intermediate: [], advanced: [] },
+      recommendations: {}
+    };
+  }
+
+  private getDefaultGuidelines(): GuidelinesData {
+    return {
+      rules: {
+        'common-mistakes': [],
+        'judging-criteria': { 'common-categories': [] }
+      },
+      'best-practices': {
+        'planning': [],
+        'development': [],
+        'demo-preparation': [],
+        'time-management': []
+      },
+      'api-integrations': {
+        'recommended-apis': {}
+      }
+    };
   }
 
   private loadKnowledgeBase(): void {
@@ -18,37 +83,29 @@ export class KnowledgeBase {
       const techStacksPath = path.join(__dirname, '../knowledge/tech-stacks.json');
       const guidelinesPath = path.join(__dirname, '../knowledge/mlh-guidelines.json');
 
+      if (!fs.existsSync(techStacksPath)) {
+        throw new FileSystemError('Tech stacks knowledge base file not found', techStacksPath);
+      }
+
+      if (!fs.existsSync(guidelinesPath)) {
+        throw new FileSystemError('Guidelines knowledge base file not found', guidelinesPath);
+      }
+
       this.techStacksData = JSON.parse(fs.readFileSync(techStacksPath, 'utf-8'));
       this.guidelinesData = JSON.parse(fs.readFileSync(guidelinesPath, 'utf-8'));
+      
+      logger.debug('Knowledge base loaded successfully');
     } catch (error) {
-      console.warn('Warning: Could not load knowledge base files. Using defaults.');
-      this.techStacksData = { 
-        templates: {}, 
-        quickPicks: { beginner: [], intermediate: [], advanced: [] }, 
-        recommendations: {} 
-      };
-      this.guidelinesData = { 
-        rules: { 
-          'common-mistakes': [],
-          'judging-criteria': { 'common-categories': [] }
-        }, 
-        'best-practices': {
-          'planning': [],
-          'development': [],
-          'demo-preparation': [],
-          'time-management': []
-        },
-        'api-integrations': {
-          'recommended-apis': {}
-        }
-      };
+      logger.warning('Could not load knowledge base files. Using defaults.');
+      logger.debug(`Knowledge base error: ${(error as Error).message}`);
+      // Keep defaults set in constructor
     }
   }
 
   /**
    * Get a tech stack template by ID
    */
-  getTechStackTemplate(templateId: string): any | null {
+  getTechStackTemplate(templateId: string): TechStackTemplate | null {
     return this.techStacksData.templates[templateId] || null;
   }
 
@@ -66,7 +123,7 @@ export class KnowledgeBase {
     const lowerIdea = idea.toLowerCase();
     for (const [keyword, templateId] of Object.entries(this.techStacksData.recommendations)) {
       if (lowerIdea.includes(keyword)) {
-        return templateId as string;
+        return templateId;
       }
     }
     return null;
@@ -75,14 +132,14 @@ export class KnowledgeBase {
   /**
    * Get all tech stack templates
    */
-  getAllTechStackTemplates(): any {
+  getAllTechStackTemplates(): Record<string, TechStackTemplate> {
     return this.techStacksData.templates;
   }
 
   /**
    * Get MLH hackathon guidelines
    */
-  getHackathonGuidelines(): any {
+  getHackathonGuidelines(): GuidelinesData {
     return this.guidelinesData;
   }
 

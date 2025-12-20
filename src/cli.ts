@@ -6,6 +6,9 @@ import { GradientCoach } from './index';
 import { ProjectIdea } from './types';
 import * as fs from 'fs';
 import * as path from 'path';
+import { formatErrorForUser } from './utils/errors';
+import { validateExperienceLevel, validateProjectIdea, validateAPIKey, validateOutputDirectory, validateFeatures } from './utils/validation';
+import { logger } from './utils/logger';
 
 const program = new Command();
 
@@ -24,10 +27,28 @@ program
   .action(async (options) => {
     try {
       // Check for API key
-      if (!process.env.ANTHROPIC_API_KEY) {
-        console.error('❌ Error: ANTHROPIC_API_KEY environment variable not set');
-        console.log('\nPlease set your API key:');
+      const apiKey = process.env.ANTHROPIC_API_KEY;
+      if (!apiKey) {
+        logger.error('ANTHROPIC_API_KEY environment variable not set');
+        logger.info('\nPlease set your API key:');
         console.log('  export ANTHROPIC_API_KEY=your-api-key-here\n');
+        process.exit(1);
+      }
+
+      // Validate API key format
+      try {
+        validateAPIKey(apiKey);
+      } catch (error) {
+        logger.error((error as Error).message);
+        logger.info('\nGet your API key from: https://console.anthropic.com/\n');
+        process.exit(1);
+      }
+
+      // Validate output directory
+      try {
+        validateOutputDirectory(options.output);
+      } catch (error) {
+        logger.error((error as Error).message);
         process.exit(1);
       }
 
@@ -43,7 +64,14 @@ program
             name: 'idea',
             message: 'What\'s your hackathon project idea?',
             default: options.idea,
-            validate: (input) => input.length > 0 || 'Please enter a project idea',
+            validate: (input) => {
+              try {
+                validateProjectIdea(input);
+                return true;
+              } catch (error) {
+                return (error as Error).message;
+              }
+            },
           },
           {
             type: 'list',
@@ -65,17 +93,40 @@ program
           },
         ]);
 
+        const features = answers.features 
+          ? answers.features.split(',').map((f: string) => f.trim()).filter(Boolean) 
+          : undefined;
+
+        // Validate features
+        if (features) {
+          try {
+            validateFeatures(features);
+          } catch (error) {
+            logger.error((error as Error).message);
+            process.exit(1);
+          }
+        }
+
         projectIdea = {
           idea: answers.idea,
           experienceLevel: answers.experienceLevel as 'beginner' | 'intermediate' | 'advanced',
-          features: answers.features ? answers.features.split(',').map((f: string) => f.trim()).filter(Boolean) : undefined,
+          features,
         };
         options.scaffold = answers.scaffold;
       } else {
-        projectIdea = {
-          idea: options.idea,
-          experienceLevel: options.experience as 'beginner' | 'intermediate' | 'advanced',
-        };
+        // Validate command-line inputs
+        try {
+          validateProjectIdea(options.idea);
+          const experienceLevel = validateExperienceLevel(options.experience);
+          
+          projectIdea = {
+            idea: options.idea,
+            experienceLevel,
+          };
+        } catch (error) {
+          logger.error((error as Error).message);
+          process.exit(1);
+        }
       }
 
       // Run the coach
@@ -84,48 +135,55 @@ program
 
       // Save output to files
       const outputDir = options.output;
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
-
-      // Save main output
-      const outputPath = path.join(outputDir, 'gradient-coach-report.json');
-      fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
-      console.log(`\n📄 Full report saved to: ${outputPath}`);
-
-      // Save README with formatted output
-      const readmePath = path.join(outputDir, 'README.md');
-      const readme = generateReadme(output, projectIdea);
-      fs.writeFileSync(readmePath, readme);
-      console.log(`📄 Formatted report saved to: ${readmePath}`);
-
-      // Save Cline tasks
-      const tasksPath = path.join(outputDir, 'cline-tasks.json');
-      fs.writeFileSync(tasksPath, JSON.stringify(output.clineTasks, null, 2));
-      console.log(`📄 Cline tasks saved to: ${tasksPath}`);
-
-      // Save scaffold files if generated
-      if (output.scaffoldFiles) {
-        const scaffoldDir = path.join(outputDir, 'scaffold');
-        if (!fs.existsSync(scaffoldDir)) {
-          fs.mkdirSync(scaffoldDir, { recursive: true });
+      try {
+        if (!fs.existsSync(outputDir)) {
+          fs.mkdirSync(outputDir, { recursive: true });
         }
 
-        for (const [filename, content] of Object.entries(output.scaffoldFiles)) {
-          const filePath = path.join(scaffoldDir, filename);
-          const fileDir = path.dirname(filePath);
-          if (!fs.existsSync(fileDir)) {
-            fs.mkdirSync(fileDir, { recursive: true });
+        // Save main output
+        const outputPath = path.join(outputDir, 'gradient-coach-report.json');
+        fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
+        logger.info(`Full report saved to: ${outputPath}`);
+
+        // Save README with formatted output
+        const readmePath = path.join(outputDir, 'README.md');
+        const readme = generateReadme(output, projectIdea);
+        fs.writeFileSync(readmePath, readme);
+        logger.info(`Formatted report saved to: ${readmePath}`);
+
+        // Save Cline tasks
+        const tasksPath = path.join(outputDir, 'cline-tasks.json');
+        fs.writeFileSync(tasksPath, JSON.stringify(output.clineTasks, null, 2));
+        logger.info(`Cline tasks saved to: ${tasksPath}`);
+
+        // Save scaffold files if generated
+        if (output.scaffoldFiles) {
+          const scaffoldDir = path.join(outputDir, 'scaffold');
+          if (!fs.existsSync(scaffoldDir)) {
+            fs.mkdirSync(scaffoldDir, { recursive: true });
           }
-          fs.writeFileSync(filePath, content);
+
+          for (const [filename, content] of Object.entries(output.scaffoldFiles)) {
+            const filePath = path.join(scaffoldDir, filename);
+            const fileDir = path.dirname(filePath);
+            if (!fs.existsSync(fileDir)) {
+              fs.mkdirSync(fileDir, { recursive: true });
+            }
+            fs.writeFileSync(filePath, content);
+          }
+          logger.info(`Scaffold files saved to: ${scaffoldDir}/`);
         }
-        console.log(`📦 Scaffold files saved to: ${scaffoldDir}/`);
+      } catch (error) {
+        logger.error(`Failed to save output files: ${(error as Error).message}`);
+        process.exit(1);
       }
 
-      console.log('\n✨ All done! Good luck at the hackathon! 🚀\n');
+      logger.success('\nAll done! Good luck at the hackathon! 🚀\n');
+      process.exit(0);
 
     } catch (error) {
-      console.error('\n❌ Error:', error);
+      console.error('\n' + formatErrorForUser(error as Error));
+      logger.debug((error as Error).stack || '');
       process.exit(1);
     }
   });

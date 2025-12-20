@@ -6,6 +6,7 @@ import { TimelineGenerator } from './generators/timeline';
 import { ClineTaskGenerator } from './generators/cline-tasks';
 import { PitchGenerator } from './generators/pitch';
 import { ScaffoldGenerator } from './generators/scaffold';
+import { logger } from './utils/logger';
 
 export class GradientCoach {
   private ai: GradientAIClient;
@@ -27,52 +28,52 @@ export class GradientCoach {
   }
 
   async coach(project: ProjectIdea, includeScaffold: boolean = false): Promise<CoachOutput> {
-    console.log('🚀 Starting Gradient Coach analysis...\n');
+    logger.section('🚀 Starting Gradient Coach analysis...');
 
     // Step 1: Validate feasibility
-    console.log('⚡ Validating 24-hour feasibility...');
+    logger.step('⚡ Validating 24-hour feasibility...');
     const feasibility = await this.feasibilityValidator.validate(project);
-    console.log(`   ${feasibility.isFeasible ? '✅' : '❌'} Feasibility: ${feasibility.isFeasible ? 'Feasible' : 'Not Feasible'}`);
-    console.log(`   Risk Level: ${feasibility.riskLevel}`);
+    logger.result('Feasibility', feasibility.isFeasible ? '✅ Feasible' : '❌ Not Feasible');
+    logger.result('Risk Level', feasibility.riskLevel);
 
     if (!feasibility.isFeasible) {
-      console.log('\n⚠️  Project may not be feasible in 24 hours. Consider these recommendations:');
-      feasibility.recommendations.forEach(rec => console.log(`   - ${rec}`));
+      logger.warning('Project may not be feasible in 24 hours. Consider these recommendations:');
+      feasibility.recommendations.forEach(rec => logger.info(`   - ${rec}`));
     }
 
     // Step 2: Recommend tech stack
-    console.log('\n🛠️  Recommending ultra-lean tech stack...');
+    logger.step('🛠️  Recommending ultra-lean tech stack...');
     const techStack = await this.techStackRecommender.recommend(project);
-    console.log(`   ✅ Tech stack recommended`);
+    logger.success('Tech stack recommended');
 
     // Step 3: Generate timeline
-    console.log('\n📅 Generating project timeline...');
+    logger.step('📅 Generating project timeline...');
     const timeline = await this.timelineGenerator.generate(
       project,
       techStack,
       feasibility.estimatedHours
     );
-    console.log(`   ✅ Timeline created (${timeline.totalHours} hours)`);
+    logger.success(`Timeline created (${timeline.totalHours} hours)`);
 
     // Step 4: Generate Cline tasks
-    console.log('\n🤖 Generating Cline tasks...');
+    logger.step('🤖 Generating Cline tasks...');
     const clineTasks = await this.clineTaskGenerator.generate(project, techStack, timeline);
-    console.log(`   ✅ ${clineTasks.length} tasks generated`);
+    logger.success(`${clineTasks.length} tasks generated`);
 
     // Step 5: Generate pitch
-    console.log('\n🎤 Crafting pitch...');
+    logger.step('🎤 Crafting pitch...');
     const pitch = await this.pitchGenerator.generate(project, techStack);
-    console.log(`   ✅ Pitch created: "${pitch.title}"`);
+    logger.success(`Pitch created: "${pitch.title}"`);
 
     // Step 6: Generate scaffold (optional)
     let scaffoldFiles: Record<string, string> | undefined;
     if (includeScaffold) {
-      console.log('\n📦 Generating repository scaffold...');
+      logger.step('📦 Generating repository scaffold...');
       scaffoldFiles = await this.scaffoldGenerator.generate(project, techStack);
-      console.log(`   ✅ ${Object.keys(scaffoldFiles).length} files generated`);
+      logger.success(`${Object.keys(scaffoldFiles).length} files generated`);
     }
 
-    console.log('\n✨ Gradient Coach analysis complete!\n');
+    logger.section('✨ Gradient Coach analysis complete!');
 
     return {
       feasibility,
